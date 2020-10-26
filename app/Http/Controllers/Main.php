@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 
 class Main extends Controller
 {
-    //
+    // =================================================================
     public function index()
     {
-        echo 'aqui';
+        // verifica se o usuário está logado
+        if (session()->has('user')) {
+            echo 'logado';
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    // ================================================================
+    public function login()
+    {
+        echo 'formulário de login';
     }
 }
