@@ -20,6 +20,12 @@ class Main extends Controller
     // ================================================================
     public function login()
     {
-        echo 'formulário de login';
+        return view('login');
+    }
+
+    // ================================================================
+    public function login_submit(Request $request)
+    {
+        echo 'submetido';
     }
 }
