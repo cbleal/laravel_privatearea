@@ -8,13 +8,27 @@
                 <h4>LOGIN</h4>
                 <hr>
 
-                {{-- @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>                               
-                @endif --}}
+                {{-- erros de validação --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>     
+                    </div>                          
+                @endif
+                
+                {{-- erros de login --}}
+                @if (isset($erros))
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($erros as $erro)
+                                <li>{{ $erro }}</li>                        
+                            @endforeach
+                        </ul>
+                    </div>                              
+                @endif
 
                 {{-- form --}}
                 <form action="{{ route('login_submit') }}" method="post">
@@ -26,26 +40,32 @@
                         <label>Usuário:</label>
                         <input type="text" name="email" class="form-control">
                         
-                        <div>
+                        {{-- <div>
                             @error('email')
                                 {{ $message }}
                             @enderror
-                        </div>
+                        </div> --}}
+                        {{-- @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror --}}
                     </div>
 
                     <div class="form-group">
                         <label>Senha:</label>
                         <input type="password" name="senha" class="form-control">
 
-                        <div>
+                        {{-- <div>
                             @error('senha')
                                 {{ $message }}
                             @enderror
-                        </div>
+                        </div> --}}
+                        {{-- @error('senha')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror --}}
                     </div>
 
                     <div class="form-group">                        
-                        <input type="submit" value="Entrar" class="btn btn-success">
+                        <input type="submit" value="Entrar" class="btn btn-primary">
                     </div>
 
                 </form>

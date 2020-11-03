@@ -23,7 +23,14 @@ class Main extends Controller
     // ================================================================
     public function login()
     {
-        return view('login');
+        $erros = session('erros');
+        $data = [];
+        if (!empty($erros)) {
+            $data = [
+                'erros' => $erros
+            ];
+        }
+        return view('login', $data);
     }
 
     // ================================================================
@@ -33,23 +40,22 @@ class Main extends Controller
         $request->validated();
 
         // verificar dados de login
-        $email = $request->input('email');
-        $password = $request->input('senha');
+        $email = trim($request->input('email'));
+        $password = trim($request->input('senha'));
 
         $user = User::where('email', $email)->first();
 
         if (!$user) {
-            echo 'Erro';
-            return;
+            session()->flash('erros', ['Usuário não cadastrado']);
+            return redirect()->route('login');
         }
 
         // verificar se a senha está correta
-        if (Hash::check($password, $user->password)) {
-            echo 'OK';            
-        } else {
-            echo 'NOK';
-        }
+        if (!Hash::check($password, $user->password)) {
+            echo 'NOK';            
+        } 
 
-        // criar a sessão 
+        // criar a sessão
+        echo "SESSÃO !!!";
     }
 }

@@ -16,7 +16,7 @@ class FrmLoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'max:50'],
-            'senha' => 'required'
+            'senha' => ['required', 'min:3', 'max:20']
         ];
     }
 
@@ -30,8 +30,10 @@ class FrmLoginRequest extends FormRequest
         return [
             'email.required' => 'O campo e-mail é obrigatório.',
             'email.email' => 'O campo e-mail não é válido.',
-            'email.max' => 'O campo e-mail não pode ter mais de 50 caracteres.',
-            'senha.required' => 'O campo senha é obrigatório.'
+            'email.max' => 'O campo e-mail não pode ter mais de :max caracteres.',
+            'senha.required' => 'O campo senha é obrigatório.',
+            'senha.min' => 'O campo senha deve ter no mínimo :min caracteres.',
+            'senha.max' => 'O campo senha deve ter no máximo :max caracteres.',
         ];
     }
 }
