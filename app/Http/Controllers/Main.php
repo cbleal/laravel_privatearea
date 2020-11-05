@@ -12,13 +12,15 @@ class Main extends Controller
     /**
      * CONTROLA O FLUXO DE SESSÃO
      * - Faz uma verificação através do método privado checkSession() se existe
-     *   um atributo usuário na sessão. Se houver, é mostrado LOGADO, senão, o fluxo
-     *   é direcionado para a rota login que chama o método login() deste controller.
+     *   um atributo usuário na sessão. Se houver, é redirecionado para a rota "home",
+     *   que chama o método home() deste controller, senão, o fluxo é direcionado para 
+     *   a rota login que chama o método login() deste controller.
      */
     public function index()
     {      
         if ($this->checkSession()) {  // verifica se existe um usuário na sessão
             echo 'LOGADO';  // se houver, mostra LOGADO
+            return redirect()->route('home');
         } else {  // senão
             return redirect()->route('login');  // direciona para login
         }
@@ -96,5 +98,27 @@ class Main extends Controller
         # login é válido, vamos criar a sessão
         session()->put('user', $user);  // coloca o usuário na sessão
         return redirect()->route('index');  // redireciona para login com o usuário correto
+    }
+
+    /**
+     * CHAMA A VIEW HOME (VIEW PRINCIPAL DA APLICAÇÃO), MAS ANTES FAZ UM TESTE PARA SABER SE
+     * A SESSÃO ESTÁ ATIVA
+     */
+    public function home()
+    {
+        if (!$this->checkSession()) {  // se a sessão retornar false (vazia)
+            return redirect()->route('login');  // é redirecionado para rota login
+        }
+
+        return view('home');  // se passar na verificação, a view home é chamada
+    }
+
+    /**
+     * LIMPA O CONTEÚDO DA SESSÃO
+     */
+    public function logout()
+    {
+        session()->forget('user');  // tira o atributo user da sessão
+        return redirect()->route('index');  // redireciona para rota index
     }
 }

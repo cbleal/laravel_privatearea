@@ -37,8 +37,8 @@
                     @csrf
 
                     <div class="form-group">
-                        <label>Usuário:</label>
-                        <input type="text" name="email" class="form-control">
+                        <label>E-mail:</label>
+                        <input type="text" name="email" class="form-control" placeholder="Digite seu e-mail">
                         
                         {{-- <div>
                             @error('email')
@@ -52,7 +52,7 @@
 
                     <div class="form-group">
                         <label>Senha:</label>
-                        <input type="password" name="senha" class="form-control">
+                        <input type="password" name="senha" class="form-control" placeholder="Digite sua senha">
 
                         {{-- <div>
                             @error('senha')
