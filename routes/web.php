@@ -18,3 +18,9 @@ Route::get('/facade', function () {
 
     Tools::teste();
 });
+
+Route::get('/constantes', function () {
+    echo config('constants.VERSAO');
+    echo "<br>";
+    echo config('constants.MYSQL_HOST');
+});
