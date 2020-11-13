@@ -35,41 +35,52 @@ return [
 
     'mailers' => [
         'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'transport' => config('constants.MAIL_TRANSPORT'),
+            'host' => config('constants.MAIL_HOST'),
+            'port' => config('constants.MAIL_PORT'),
+            'encryption' => config('constants.MAIL_ENCRYPTION'),
+            'username' => config('constants.MAIL_USERNAME'),
+            'password' => config('constants.MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
         ],
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
+        // 'smtp' => [
+        //     'transport' => 'smtp',
+        //     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+        //     'port' => env('MAIL_PORT', 587),
+        //     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+        //     'username' => env('MAIL_USERNAME'),
+        //     'password' => env('MAIL_PASSWORD'),
+        //     'timeout' => null,
+        //     'auth_mode' => null,
+        // ],
 
-        'mailgun' => [
-            'transport' => 'mailgun',
-        ],
+        // 'ses' => [
+        //     'transport' => 'ses',
+        // ],
 
-        'postmark' => [
-            'transport' => 'postmark',
-        ],
+        // 'mailgun' => [
+        //     'transport' => 'mailgun',
+        // ],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => '/usr/sbin/sendmail -bs',
-        ],
+        // 'postmark' => [
+        //     'transport' => 'postmark',
+        // ],
 
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
-        ],
+        // 'sendmail' => [
+        //     'transport' => 'sendmail',
+        //     'path' => '/usr/sbin/sendmail -bs',
+        // ],
 
-        'array' => [
-            'transport' => 'array',
-        ],
+        // 'log' => [
+        //     'transport' => 'log',
+        //     'channel' => env('MAIL_LOG_CHANNEL'),
+        // ],
+
+        // 'array' => [
+        //     'transport' => 'array',
+        // ],
     ],
 
     /*
@@ -84,8 +95,11 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => config('constants.MAIL_FROM_ADDRESS'),
+        'name'    => config('constants.MAIL_FROM_NAME'),
+
+        // 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        // 'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*

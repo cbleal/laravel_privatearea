@@ -1,6 +1,9 @@
 <?php
 
 #use App\Classes\Tools;
+
+use App\Mail\EmailTeste;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Main@index')->name('index');
@@ -23,4 +26,9 @@ Route::get('/constantes', function () {
     echo config('constants.VERSAO');
     echo "<br>";
     echo config('constants.MYSQL_HOST');
+});
+
+Route::get('/email', function() {
+    Mail::to('cborgesleal@hotmail.com')->send(new EmailTeste());            
+    echo 'E-mail enviado.';
 });
