@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Random;
 use App\Http\Requests\FrmLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class Main extends Controller
 {   
+    private $R;
+
+    public function __construct() {
+        $this->R = new Random();
+    }
+
     /**
      * CONTROLA O FLUXO DE SESSÃO
      * - Faz uma verificação através do método privado checkSession() se existe
@@ -27,7 +34,7 @@ class Main extends Controller
     }
 
     /**
-     * MÉTODO RETORNA A EXISTÊNCIA DO ATRIBUTO 'user' NA SESSÃO     * 
+     * MÉTODO RETORNA A EXISTÊNCIA DO ATRIBUTO 'user' NA SESSÃO 
      */
     private function checkSession()
     {
@@ -110,7 +117,11 @@ class Main extends Controller
             return redirect()->route('login');  // é redirecionado para rota login
         }
 
-        return view('home');  // se passar na verificação, a view home é chamada
+        $data = [
+            'smstoken' => $this->R->SMSToken()
+        ];
+        
+        return view('home', $data);  // se passar na verificação, a view home é chamada
     }
 
     /**
