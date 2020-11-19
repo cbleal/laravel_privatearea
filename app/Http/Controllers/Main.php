@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Enc;
 use App\Classes\Random;
 use App\Http\Requests\FrmLoginRequest;
 use App\Models\User;
@@ -11,9 +12,11 @@ use Illuminate\Support\Facades\Hash;
 class Main extends Controller
 {   
     private $R;
+    private $Enc;
 
     public function __construct() {
         $this->R = new Random();
+        $this->Enc = new Enc();
     }
 
     /**
@@ -131,5 +134,18 @@ class Main extends Controller
     {
         session()->forget('user');  // tira o atributo user da sessão
         return redirect()->route('index');  // redireciona para rota index
+    }
+
+    public function edit($id_usuario)
+    {
+        $id_usuario = $this->Enc->encriptar($id_usuario);
+        echo "O id do usuário é {$id_usuario}";
+    }
+
+    public function final($hash)
+    {
+        $hash = $this->Enc->desencriptar($hash);
+
+        echo "Valor: " . $hash;
     }
 }

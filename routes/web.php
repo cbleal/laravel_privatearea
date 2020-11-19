@@ -32,3 +32,6 @@ Route::get('/email', function() {
     Mail::to('cborgesleal@hotmail.com')->send(new EmailTeste());            
     echo 'E-mail enviado.';
 });
+
+Route::get('/edit/{id}', 'Main@edit')->name('main_edit');
+Route::get('/final/{hash}', 'Main@final')->name('main_final');
