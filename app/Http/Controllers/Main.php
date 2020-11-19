@@ -120,11 +120,21 @@ class Main extends Controller
             return redirect()->route('login');  // é redirecionado para rota login
         }
 
+        $users = User::all();
+
         $data = [
-            'smstoken' => $this->R->SMSToken()
+            'smstoken' => $this->R->SMSToken(),
+            'users' => $users,
         ];
         
         return view('home', $data);  // se passar na verificação, a view home é chamada
+    }
+
+    public function edit($id_user)
+    {
+        $id_user = $this->Enc->desencriptar($id_user);
+        
+        echo "O id do usuário é " . $id_user;
     }
 
     /**
@@ -136,13 +146,13 @@ class Main extends Controller
         return redirect()->route('index');  // redireciona para rota index
     }
 
-    public function edit($id_usuario)
+    public function encript($id_usuario)
     {
         $id_usuario = $this->Enc->encriptar($id_usuario);
         echo "O id do usuário é {$id_usuario}";
     }
 
-    public function final($hash)
+    public function desencipt($hash)
     {
         $hash = $this->Enc->desencriptar($hash);
 
