@@ -8,6 +8,7 @@ use App\Http\Requests\FrmLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class Main extends Controller
 {   
@@ -107,8 +108,28 @@ class Main extends Controller
 
         # login é válido, vamos criar a sessão
         session()->put('user', $user);  // coloca o usuário na sessão
+
+
+        // log
+        Log::channel('main')->info("{$user->name} efetuou login.");
+
         return redirect()->route('index');  // redireciona para login com o usuário correto
     }
+
+    /**
+     * LIMPA O CONTEÚDO DA SESSÃO
+     */
+    public function logout()
+    {
+        // log
+        $user = session('user');
+        Log::channel('main')->info("{$user->name} efetuou logout.}");
+
+        session()->forget('user');  // tira o atributo user da sessão
+
+        return redirect()->route('index');  // redireciona para rota index
+    }
+    
 
     /**
      * CHAMA A VIEW HOME (VIEW PRINCIPAL DA APLICAÇÃO), MAS ANTES FAZ UM TESTE PARA SABER SE
@@ -137,15 +158,6 @@ class Main extends Controller
         echo "O id do usuário é " . $id_user;
     }
 
-    /**
-     * LIMPA O CONTEÚDO DA SESSÃO
-     */
-    public function logout()
-    {
-        session()->forget('user');  // tira o atributo user da sessão
-        return redirect()->route('index');  // redireciona para rota index
-    }
-
     public function encript($id_usuario)
     {
         $id_usuario = $this->Enc->encriptar($id_usuario);
@@ -158,4 +170,5 @@ class Main extends Controller
 
         echo "Valor: " . $hash;
     }
+    
 }
