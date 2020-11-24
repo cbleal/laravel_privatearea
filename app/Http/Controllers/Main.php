@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Enc;
+use App\Classes\Logger;
 use App\Classes\Random;
 use App\Http\Requests\FrmLoginRequest;
 use App\Models\User;
@@ -14,10 +15,12 @@ class Main extends Controller
 {   
     private $R;
     private $Enc;
+    private $Logger;
 
     public function __construct() {
         $this->R = new Random();
         $this->Enc = new Enc();
+        $this->Logger = new Logger();
     }
 
     /**
@@ -95,23 +98,22 @@ class Main extends Controller
         $user = User::where('email', $email)->first();
 
         # se não encontrou o usuário com o email digitado
-        if (!$user or !Hash::check($password, $user->password)) {            
-            session()->flash('erros', ['Usuário/Senha não cadastrado.']);  // coloca na sessão o erro            
+        if (!$user or !Hash::check($password, $user->password)) {
+                        
+            // log
+            $this->Logger->log('error', $email . ' - Login inválido!');
+
+            session()->flash('erros', ['Usuário/Senha não cadastrado.']);  // coloca na sessão o erro
+
             return redirect()->route('login');  // redireciona para login
         }
-
-        # verificar se a senha está correta
-        // if (!Hash::check($password, $user->password)) {  // se a senha não confere no banco
-        //     session()->flash('erros', ['Senha inválida.']);  // coloca na sessão o erro
-        //     return redirect()->route('login');  // redireciona para login
-        // } 
-
+     
         # login é válido, vamos criar a sessão
         session()->put('user', $user);  // coloca o usuário na sessão
 
-
         // log
-        Log::channel('main')->info("{$user->name} efetuou login.");
+        // Log::channel('main')->info("{$user->name} efetuou login.");
+        $this->Logger->log('info', 'Efetuou login.');
 
         return redirect()->route('index');  // redireciona para login com o usuário correto
     }
@@ -122,8 +124,9 @@ class Main extends Controller
     public function logout()
     {
         // log
-        $user = session('user');
-        Log::channel('main')->info("{$user->name} efetuou logout.}");
+        // $user = session('user');
+        // Log::channel('main')->info("{$user->name} efetuou logout.}");
+        $this->Logger->log('info', 'Efetuou logout.');
 
         session()->forget('user');  // tira o atributo user da sessão
 
