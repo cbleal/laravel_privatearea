@@ -17,5 +17,23 @@
                      - {{ $user->name }}</li>
             @endforeach
         </ul>
-    </div>    
+    </div>
+    <div>
+        {{-- <img src="{{ asset('storage/images/lion.jpg') }}"> --}}
+        <h3>Upload de Arquivos</h3>
+        <form action="{{ route('main_upload') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="ficheiro">
+            <input type="submit" value="Enviar">
+        </form>
+        @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
 @endsection

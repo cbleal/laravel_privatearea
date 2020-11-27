@@ -173,5 +173,28 @@ class Main extends Controller
 
         echo "Valor: " . $hash;
     }
+
+    public function upload(Request $request)
+    {
+        // VALIDAÇÃO DO UPLOAD
+        $validate = $request->validate(
+            // RULES
+            [
+                'ficheiro' => 'required|image|mimes:jpeg|max:20|dimensions:min_width=100,min_height=100,max_width=1000,max_height=500',
+            ],
+            // MESSAGES
+            [
+                'ficheiro.required' => 'O campo ficheiro é obrigatório.',
+                'ficheiro.image' => 'O ficheiro deve ser uma imagem.',
+                'ficheiro.mimes' => 'O ficheiro deve ser no formato jpg.',
+                'ficheiro.max' => 'O ficheiro não pode ser maior que 20 kb.',
+                'ficheiro.dimensions' => 'Dimensões inválidas.',
+            ]
+        );
+
+        // $request->ficheiro->storeAs('public/images', 'novo.png');
+        // $request->ficheiro->store('public/images');
+        echo "Concluído.";
+    }
     
 }

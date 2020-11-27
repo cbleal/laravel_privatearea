@@ -37,3 +37,5 @@ Route::get('/encript/{id}', 'Main@edit')->name('main_edit');
 Route::get('/desencript/{hash}', 'Main@final')->name('main_final');
 
 Route::get('/edit/{id}', 'Main@edit')->name('main_edit');
+
+Route::post('/upload', 'Main@upload')->name('main_upload');
