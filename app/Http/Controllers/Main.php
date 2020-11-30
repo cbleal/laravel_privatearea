@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class Main extends Controller
 {   
@@ -197,4 +198,16 @@ class Main extends Controller
         echo "Concluído.";
     }
     
+    public function list_files()
+    {
+        $files = Storage::files('public/pdfs');
+
+        echo '<pre>';
+        print_r($files);
+    }
+
+    public function download($file)
+    {
+        return response()->download("storage/pdfs/{$file}");
+    }
 }

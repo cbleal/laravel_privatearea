@@ -39,3 +39,6 @@ Route::get('/desencript/{hash}', 'Main@final')->name('main_final');
 Route::get('/edit/{id}', 'Main@edit')->name('main_edit');
 
 Route::post('/upload', 'Main@upload')->name('main_upload');
+
+Route::get('/list_files', 'Main@list_files')->name('main_list_files');
+Route::get('/download/{file}', 'Main@download')->name('main_download');
